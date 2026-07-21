@@ -1,23 +1,21 @@
 <?php
 
-//To Handle Session Variables on This Page
 session_start();
 
-//If user Not logged in then redirect them back to homepage. 
-if (empty($_SESSION['id_user'])) {
-  header("Location: ../index.php");
+if (isset($_SESSION['id_admin'])) {
+  header("Location: dashboard.php");
   exit();
 }
 
-require_once("../db.php");
 ?>
 <!DOCTYPE html>
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  
   <title>Placement Portal</title>
+  <link href="../img/logo.png" rel="icon">
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -28,9 +26,9 @@ require_once("../db.php");
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../css/AdminLTE.min.css">
-  <link rel="stylesheet" href="../css/_all-skins.min.css">
-  <!-- Custom -->
-  <link rel="stylesheet" href="../css/custom.css">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/skins/square/blue.css">
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -38,174 +36,132 @@ require_once("../db.php");
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 
+  <script src="https://cdn.tailwindcss.com"></script>
+
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 
-<body class="hold-transition skin-green sidebar-mini">
-  <div class="wrapper">
+<body class="hold-transition login-page bg-gray-800 text-white">
 
 
+  <?php
+  include '../uploads/admin_header.php';
+  ?>
 
-    <?php
-    include 'header.php'
-    ?>
+  <div class="login-box " id="sms">
 
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper" style="margin-left: 0px;">
-
-      <section id="candidates" class="content-header">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-3">
-              <div id="star" class="box box-solid">
-                <div class="box-header with-border">
-                  <h3 class="box-title">Welcome <b><?php echo $_SESSION['name']; ?></b></h3>
-                </div>
-                <div class="box-body no-padding">
-                  <ul class="nav nav-pills nav-stacked">
-                    <li><a href="edit-profile.php"><i class="fa fa-user"></i> Edit Profile</a></li>
-                    <li class="active"><a href="index.php"><i class="fa fa-address-card-o"></i> My Applications</a></li>
-                    <!-- <li><a href="../jobs.php"><i class="fa fa-list-ul"></i> Active Drives</a></li> -->
-                    <li><a href="mailbox.php"><i class="fa fa-envelope"></i> Mailbox</a></li>
-                    <li><a href="settings.php"><i class="fa fa-gear"></i> Settings</a></li>
-                    <li><a href="../logout.php"><i class="fa fa-arrow-circle-o-right"></i> Logout</a></li>
-                  </ul>
-
-                </div>
-              </div>
-            </div>
-            <div class="col-md-9 bg-white padding-2">
-
-              <div class="alert alert-info alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <i class="icon fa fa-info"></i> Update your profile, if you are a new user.
-              </div>
-
-
-
-              <h2>Applied Drives</h2>
-              <p>Below you will find job roles you have applied for</p>
-
-              <?php
-              $sql = "SELECT * FROM job_post INNER JOIN apply_job_post ON job_post.id_jobpost=apply_job_post.id_jobpost WHERE apply_job_post.id_user='$_SESSION[id_user]'";
-              $result = $conn->query($sql);
-
-              if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-              ?>
-                  <?php
-
-                  if ($row['status'] == 0) {
-                  ?>
-                    <div class="alert alert-info alert-dismissible">
-                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                      <i class="icon fa fa-info"></i> Congratulations, you have been placed in <?php echo $row['jobtitle']; ?>.
-                    </div>
-                  <?php
-                  }
-                  ?>
-                  <div class="attachment-block clearfix padding-2">
-                    <h4 class="attachment-heading"><a href="view-job-post.php?id=<?php echo $row['id_jobpost']; ?>"><?php echo $row['jobtitle']; ?></a></h4>
-                    <div class="attachment-text padding-2">
-                      <div class="pull-left"><i class="fa fa-calendar"></i> <?php echo $row['createdat']; ?></div>
-                      <?php
-
-                      if ($row['status'] == 0) {
-                        echo '<div class="pull-right"><strong class="text-orange">Placed</strong></div>';
-                      } else if ($row['status'] == 1) {
-                        echo '<div class="pull-right"><strong class="text-red">Rejected</strong></div>';
-                      } else if ($row['status'] == 2) {
-                        echo '<div class="pull-right"><strong class="text-green">Applied</strong></div> ';
-                      }
-                      ?>
-
-                    </div>
-                  </div>
-
-              <?php
-                }
-              }
-              ?>
-
-            </div>
-          </div>
-        </div>
-      </section>
-
-
-
+    <div class="login-logo text-white">
+      <a style="color:white" href="../index.php">Placement Portal</a>
     </div>
-    <!-- /.content-wrapper -->
+    <!-- /.login-logo -->
+    <div class="bg-gray-900 text-white login-box-body large">
+      <p class="login-box-msg mt-7">Admin Login</p>
+      <style>
+        .large {
+          width: 350px;
+          height: 300px;
+        }
 
-    <footer class="main-footer" style="margin-left: 0px;">
-      <div class="text-center">
-        <strong>Copyright &copy; 2025 <a href="learningfromscratch.online">Placement Portal</a>.</strong> All rights
-        reserved.
+        .small {
+          font-size: small;
+        }
+
+        #footer {
+          position: absolute;
+          bottom: 0;
+          width: 100%;
+          height: 60px;
+          /* Height of the footer */
+
+        }
+
+
+        @media only screen and (max-width: 768px) {
+          .large {
+            margin: auto;
+
+          }
+
+          .small {
+
+            position: absolute;
+          }
+      </style>
+
+      <form action="checklogin.php" method="post">
+        <div class="form-group has-feedback">
+          <input type="text" class="form-control" name="username" placeholder="Username">
+          <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        </div>
+        <div class="form-group has-feedback">
+          <input type="password" class="form-control" name="password" placeholder="Password">
+          <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
+        <div class="row">
+          <!-- /.col -->
+          <div class="col-xs-4">
+            <button type="submit" class="btn btn-primary btn-block btn-flat" class=" transition ease-in-out delay-150 bg-blue-500 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300">Sign In</button>
+          </div>
+          <!-- /.col -->
+        </div>
+        <?php
+        //If User Failed To log in then show error message.
+        if (isset($_SESSION['loginError'])) {
+        ?>
+          <div>
+            <p class="text-center">Invalid Email/Password! Try Again!</p>
+          </div>
+        <?php
+          unset($_SESSION['loginError']);
+        }
+        ?>
+
+      </form>
+    </div>
+    <!-- /.login-box-body -->
+  </div>
+
+
+
+  <div style="margin: bottom 0px; " class="  sm:mt-48 ">
+    <footer id="footer" class="text-gray-600 body-font bg-gray-800 border-t-2 border-gray-700 small mb-0 ">
+
+      <div class="pt-1 pb-2">
+        <ul class="flex  space-x-16 justify-center text-white my-4 ">
+
+          <li><i class="fa fa-copyright" aria-hidden="true"></i>Placement Portal @ 2025</li>
+          <li><i class="fa fa-facebook" aria-hidden="true"></i></li>
+          <li><i class="fa fa-twitter" aria-hidden="true"></i></li>
+          <li><i class="fa fa-instagram" aria-hidden="true"></i></li>
+          <li><i class="fa fa-linkedin" aria-hidden="true"></i></li>
+
+        </ul>
+
+
+
+
+
       </div>
+
+
     </footer>
 
-    <!-- /.control-sidebar -->
-    <!-- Add the sidebar's background. This div must be placed
-       immediately after the control sidebar -->
-    <div class="control-sidebar-bg"></div>
+
 
   </div>
-  <!-- ./wrapper -->
+  <!-- /.login-box -->
+
 
   <!-- jQuery 3 -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <!-- Bootstrap 3.3.7 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <!-- AdminLTE App -->
   <script src="../js/adminlte.min.js"></script>
+  <!-- iCheck -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/icheck.min.js"></script>
+
 </body>
 
 </html>
-
-<style>
-  /* my css  */
-
-  .box {
-
-    font-size: medium;
-    font-family: sans-serif;
-  }
-
-
-  li {
-    color: aqua;
-  }
-
-
-  @media only screen and (max-width: 989px) {
-    .box {
-      margin: auto;
-      text-align: center;
-    }
-  }
-</style>
-
-
-<script src="../js/sweetalert.js"></script>
-
-<?php
-if (isset($_SESSION['status1'])  && $_SESSION['status1'] != '') {
-
-?>
-
-  <script>
-    swal({
-      title: "<?php echo $_SESSION['status1']; ?>",
-      text: " You have successfully applied for the drive.",
-      icon: "<?php echo $_SESSION['status_code1']; ?>",
-      button: "Okay",
-    });
-  </script>
-
-<?php
-
-  unset($_SESSION['status1']);
-}
-
-?>

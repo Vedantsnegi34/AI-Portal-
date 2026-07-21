@@ -1,15 +1,46 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;1,700;1,900&display=swap");
 body {
-  font-family: "Poppins", sans-serif;
-  
-ul {
-  list-style-type: none;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
 }
-
-.notification {
-  position: relative;
-  bottom: 20px;
-  right: 10px;
-  z-index: 5;
-  width: 350px;
+header, nav, main, footer {
+  padding: 20px;
+  background-color: #fff;
+  margin: 10px auto;
+  max-width: 900px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+nav a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: #333;
+}
+.form-container, form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  max-width: 400px;
+  margin: 20px auto;
+  background: #fff;
+  border-radius: 10px;
+}
+.job-card {
+  background: #e0f7fa;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 8px;
+}
+button {
+  padding: 10px;
+  background: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+button:hover {
+  background: #0056b3;
 }
