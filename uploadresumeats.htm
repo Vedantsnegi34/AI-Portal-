@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ATS Resume Screening</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 min-h-screen flex items-center justify-center font-sans">
+    <div class="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-xl">
+        <h2 class="text-3xl font-bold text-center text-purple-700 mb-6">Upload Resumes for ATS Screening</h2>
+
+        <form action="/analyze" method="post" enctype="multipart/form-data" class="space-y-6">
+            <div>
+                <label for="resumes" class="block text-lg font-medium text-gray-700 mb-2">Select multiple resumes (.pdf, .docx):</label>
+                <input 
+                    type="file" 
+                    name="resumes" 
+                    id="resumes" 
+                    accept=".pdf,.docx" 
+                    multiple 
+                    required 
+                    class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                >
+            </div>
+
+            <div class="text-center">
+                <button 
+                    type="submit" 
+                    class="bg-purple-600 text-white font-semibold px-6 py-2 rounded-lg hover:bg-purple-700 transition duration-300"
+                >
+                    Submit for Screening
+                </button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

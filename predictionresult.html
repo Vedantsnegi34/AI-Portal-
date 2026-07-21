@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prediction Result</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-indigo-100 to-blue-100 min-h-screen flex items-center justify-center text-gray-900">
+    <div class="bg-white shadow-2xl rounded-2xl p-10 max-w-2xl w-full">
+        <h1 class="text-3xl font-extrabold text-indigo-700 mb-8 text-center">Resume Evaluation Result</h1>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8 text-lg">
+            <p><span class="font-semibold text-gray-700">Candidate:</span> {{ name }}</p>
+            <p><span class="font-semibold text-gray-700">GPA:</span> {{ gpa }}</p>
+            <p><span class="font-semibold text-gray-700">Internships:</span> {{ internship }}</p>
+            <p><span class="font-semibold text-gray-700">Projects:</span> {{ projects }}</p>
+            <p class="sm:col-span-2"><span class="font-semibold text-gray-700">Skills:</span> {{ skills }}</p>
+        </div>
+
+        <div class="mt-6 text-center">
+            <p class="text-2xl font-bold text-green-600">Prediction: <span class="text-blue-700">{{ result }}</span></p>
+        </div>
+
+        <div class="mt-8 text-center">
+            <a href="/" class="inline-block bg-indigo-600 text-white font-medium px-6 py-2 rounded-lg hover:bg-indigo-700 transition duration-300">Upload Another Resume</a>
+        </div>
+    </div>
+</body>
+</html>

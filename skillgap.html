@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Skill Analysis Results</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans leading-relaxed text-gray-800">
+    <div class="max-w-3xl mx-auto p-6 mt-10 bg-white rounded-2xl shadow-xl">
+        <h2 class="text-3xl font-bold text-indigo-600 mb-4 text-center">Skill Analysis Results</h2>
+
+        <div class="mb-6">
+            <p class="text-lg"><strong>Your Skills:</strong> <span class="text-gray-700">{{ student_skills }}</span></p>
+            <p class="text-lg"><strong>Job Requires:</strong> <span class="text-gray-700">{{ job_required_skills }}</span></p>
+        </div>
+
+        <div class="mb-6">
+            <h3 class="text-2xl font-semibold text-red-500 mb-2">Skill Gaps Detected:</h3>
+            {% if missing_skills %}
+                <ul class="list-disc list-inside space-y-1">
+                    {% for skill in missing_skills %}
+                        <li class="text-gray-700">{{ skill }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-green-600">No skill gaps detected! Great job!</p>
+            {% endif %}
+        </div>
+
+        <div>
+            <h3 class="text-2xl font-semibold text-blue-600 mb-2">Recommended Courses:</h3>
+            {% if recommended_courses %}
+                <ul class="list-disc list-inside space-y-1">
+                    {% for skill, course in recommended_courses.items() %}
+                        <li><span class="font-medium text-gray-800">{{ skill }}</span>: <span class="text-gray-700">{{ course }}</span></li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-green-600">You're already fully equipped for the job!</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
